@@ -39,6 +39,9 @@
     border-bottom:2px solid transparent;transition:color .15s ease;}
   .nav a:hover{color:var(--ink);}
   .nav a.active{color:var(--ink);font-weight:700;border-bottom-color:var(--accent);}
+  .nav a.nav-cta{align-self:center;color:#fff;background:var(--accent);font-weight:500;
+    padding:8px 14px;border-radius:3px;border-bottom:none;}
+  .nav a.nav-cta:hover{color:#fff;background:#000;}
 
   main{padding:42px 0 52px;flex:1;}
 
@@ -147,6 +150,7 @@
       <nav class="nav">
         <a href="index.html" class="active">서비스</a>
         <a href="grade.html">등급 제도</a>
+        <a href="#" class="nav-cta" id="navContact">문의하기</a>
       </nav>
     </div>
   </header>
@@ -319,6 +323,13 @@
   document.getElementById('mClose').addEventListener('click', closeModal);
   modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+
+  /* 헤더 '문의하기' 버튼 → 팝업 */
+  document.getElementById('navContact').addEventListener('click', function(e){
+    e.preventDefault(); openModal('');
+  });
+  /* 다른 페이지에서 #contact 로 진입 시 팝업 자동 표시 */
+  if(location.hash === '#contact'){ openModal(''); }
 
   /* 문의 보내기 (Formspree) */
   document.getElementById('mSend').addEventListener('click', function(){

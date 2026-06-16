@@ -259,17 +259,24 @@
   <!-- 문의 팝업 -->
   <div class="modal-overlay" id="modal">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <h3 id="modalTitle">문의하기</h3>
-      <p class="m-sub" id="modalSvc">담당자가 확인 후 빠르게 연락드립니다.</p>
-      <label for="f-name">성함 / 기관</label>
-      <input id="f-name" type="text" placeholder="예: 홍길동 / ○○대학교 △△연구실">
-      <label for="f-contact">연락처 (이메일 또는 전화)</label>
-      <input id="f-contact" type="text" placeholder="회신받으실 연락처">
-      <label for="f-msg">문의 내용</label>
-      <textarea id="f-msg" placeholder="필요하신 제품·수량·문의사항을 적어주세요."></textarea>
-      <div class="modal-actions">
-        <button class="btn-cancel" type="button" id="mClose">취소</button>
-        <button class="btn-send" type="button" id="mSend">메일로 보내기</button>
+      <div id="formArea">
+        <h3 id="modalTitle">문의하기</h3>
+        <p class="m-sub" id="modalSvc">담당자가 확인 후 빠르게 연락드립니다.</p>
+        <label for="f-name">성함 / 기관</label>
+        <input id="f-name" type="text" placeholder="예: 홍길동 / ○○대학교 △△연구실">
+        <label for="f-contact">연락처 (이메일 또는 전화)</label>
+        <input id="f-contact" type="text" placeholder="회신받으실 연락처">
+        <label for="f-msg">문의 내용</label>
+        <textarea id="f-msg" placeholder="필요하신 제품·수량·문의사항을 적어주세요."></textarea>
+        <div class="modal-actions">
+          <button class="btn-cancel" type="button" id="mClose">취소</button>
+          <button class="btn-send" type="button" id="mSend">문의 보내기</button>
+        </div>
+      </div>
+      <div id="successArea" style="display:none;text-align:center;padding:8px 0;">
+        <h3>접수되었습니다</h3>
+        <p class="m-sub" style="margin-bottom:0;">담당자가 확인 후 빠르게 연락드리겠습니다. 감사합니다.</p>
+        <div class="modal-actions"><button class="btn-send" type="button" id="mDone">확인</button></div>
       </div>
     </div>
   </div>
@@ -297,7 +304,14 @@
     document.getElementById('f-msg').value = svc ? ('[' + svc + '] 관련 문의드립니다.\n\n') : '';
     modal.classList.add('show');
   }
-  function closeModal(){ modal.classList.remove('show'); }
+  function closeModal(){
+    modal.classList.remove('show');
+    document.getElementById('formArea').style.display = 'block';
+    document.getElementById('successArea').style.display = 'none';
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-contact').value = '';
+    document.getElementById('f-msg').value = '';
+  }
 
   document.querySelectorAll('.ask').forEach(function(b){
     b.addEventListener('click', function(){ openModal(b.getAttribute('data-svc')); });
@@ -306,23 +320,44 @@
   modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
 
-  /* 메일로 보내기 (백엔드 없이 mailto) */
+  /* 문의 보내기 (Formspree) */
   document.getElementById('mSend').addEventListener('click', function(){
     var name = document.getElementById('f-name').value.trim();
     var contact = document.getElementById('f-contact').value.trim();
     var msg = document.getElementById('f-msg').value.trim();
+    if(!contact){ alert('연락처를 입력해주세요.'); return; }
     if(!msg){ alert('문의 내용을 입력해주세요.'); return; }
 
-    var subject = '[이머전트 문의] ' + (currentSvc ? currentSvc : '연구실 구매');
-    var body =
-      '■ 서비스: ' + (currentSvc || '-') + '\n' +
-      '■ 성함/기관: ' + (name || '-') + '\n' +
-      '■ 연락처: ' + (contact || '-') + '\n' +
-      '■ 문의 내용:\n' + msg + '\n';
-    window.location.href = 'mailto:emgt.yhlee@gmail.com'
-      + '?subject=' + encodeURIComponent(subject)
-      + '&body=' + encodeURIComponent(body);
+    var btn = this;
+    btn.disabled = true; btn.textContent = '전송 중...';
+
+    fetch('https://formspree.io/f/mzdqwbpr', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        '서비스': currentSvc || '연구실 구매',
+        '성함/기관': name || '-',
+        '연락처': contact,
+        '문의내용': msg,
+        '_subject': '[이머전트 문의] ' + (currentSvc || '연구실 구매')
+      })
+    }).then(function(r){
+      if(r.ok){
+        document.getElementById('formArea').style.display = 'none';
+        document.getElementById('successArea').style.display = 'block';
+      } else {
+        r.json().then(function(d){
+          alert((d && d.errors && d.errors.map(function(e){return e.message;}).join(', ')) || '전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        }).catch(function(){ alert('전송에 실패했습니다. 잠시 후 다시 시도해주세요.'); });
+      }
+    }).catch(function(){
+      alert('전송에 실패했습니다. 네트워크 상태를 확인해주세요.');
+    }).finally(function(){
+      btn.disabled = false; btn.textContent = '문의 보내기';
+    });
   });
+
+  document.getElementById('mDone').addEventListener('click', closeModal);
 </script>
 
 </body>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>이머전트 | 등급 제도</title>
-<meta name="description" content="이머전트(Emergent) 등급 제도 안내 - 연간 거래액에 따른 등급별 서비스 요율과 결제 조건.">
+<meta name="description" content="이머전트(Emergent) 등급 제도 안내 - 연간 거래액에 따른 등급별 수수료와 결제 조건.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
@@ -64,7 +64,7 @@
   .rate-note{font-size:14px;color:var(--ink-2);margin-bottom:16px;}
   .consult-btn{display:inline-block;font-size:14px;font-weight:500;color:#fff;
     background:var(--accent);border:1px solid var(--accent);padding:11px 22px;border-radius:3px;
-    text-decoration:none;transition:background .15s ease;}
+    text-decoration:none;cursor:pointer;transition:background .15s ease;}
   .consult-btn:hover{background:#000;}
 
   /* footer */
@@ -76,6 +76,27 @@
   .biz dt{color:var(--ink-3);}
   .biz dd{color:var(--ink-2);}
   .copy{margin-top:16px;font-size:11.5px;color:var(--ink-3);}
+
+  /* modal */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);
+    display:none;align-items:center;justify-content:center;padding:18px;z-index:100;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;width:100%;max-width:420px;border:1px solid var(--line);
+    border-radius:4px;padding:26px 24px;box-shadow:0 20px 50px -18px rgba(0,0,0,.4);}
+  .modal h3{font-size:17px;font-weight:700;}
+  .modal .m-sub{font-size:13px;color:var(--ink-3);margin-top:5px;margin-bottom:18px;}
+  .modal label{display:block;font-size:12.5px;color:var(--ink-2);margin:12px 0 5px;font-weight:500;}
+  .modal input,.modal textarea{width:100%;font-family:inherit;font-size:14px;color:var(--ink);
+    border:1px solid var(--line);border-radius:3px;padding:9px 11px;background:#fff;}
+  .modal input:focus,.modal textarea:focus{outline:none;border-color:#999;}
+  .modal textarea{resize:vertical;min-height:88px;}
+  .modal-actions{display:flex;gap:9px;margin-top:20px;}
+  .modal-actions button{flex:1;font-family:inherit;font-size:14px;font-weight:500;
+    padding:11px;border-radius:3px;cursor:pointer;border:1px solid var(--line);}
+  .btn-cancel{background:#fff;color:var(--ink-2);}
+  .btn-cancel:hover{background:#f3f3f1;}
+  .btn-send{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .btn-send:hover{background:#000;}
 
   @media (max-width:600px){
     .brand small{display:none;}
@@ -94,7 +115,7 @@
       <nav class="nav">
         <a href="index.html">서비스</a>
         <a href="grade.html" class="active">등급 제도</a>
-        <a href="index.html#contact" class="nav-cta">문의하기</a>
+        <a href="#" class="nav-cta" id="navContact">문의하기</a>
       </nav>
     </div>
   </header>
@@ -108,18 +129,22 @@
       </div>
 
       <div class="section">
-        <div class="block-title">등급 기준</div>
+        <div class="block-title">등급별 수수료</div>
+        <p class="rate-note">소모품·시약은 수수료가 없으며, 그 외 서비스는 브론즈 기준 10%(부가세 별도)입니다.</p>
         <div class="table-wrap">
           <table class="grid">
-            <thead><tr><th class="svc">등급</th><th>연간 거래액</th></tr></thead>
+            <thead><tr><th class="svc">서비스</th><th>수수료 (브론즈 기준)</th></tr></thead>
             <tbody>
-              <tr><td class="svc">브론즈 Bronze</td><td>1천만원 미만</td></tr>
-              <tr><td class="svc">실버 Silver</td><td>1천만원 이상 ~ 4천만원 미만</td></tr>
-              <tr><td class="svc">골드 Gold</td><td>4천만원 이상 ~ 1억원 미만</td></tr>
-              <tr><td class="svc">플래티넘 Platinum</td><td>1억원 이상</td></tr>
+              <tr><td class="svc">소모품 및 시약 구매</td><td>수수료 없음</td></tr>
+              <tr><td class="svc">국/내외 실험 장비 할인 구매</td><td>10% (부가세 별도)</td></tr>
+              <tr><td class="svc">소프트웨어 구매</td><td>10% (부가세 별도)</td></tr>
+              <tr><td class="svc">연구실, 비품 구매</td><td>10% (부가세 별도)</td></tr>
+              <tr><td class="svc">기타 행정 결제</td><td>10% (부가세 별도)</td></tr>
             </tbody>
           </table>
         </div>
+        <p class="cap">상위 등급(실버·골드·플래티넘)은 우대 수수료가 적용됩니다. 자세한 내용은 상담을 통해 안내드립니다.</p>
+        <div style="margin-top:16px;"><a class="consult-btn" href="#" id="consultBtn">상담하기</a></div>
       </div>
 
       <div class="section">
@@ -139,9 +164,18 @@
       </div>
 
       <div class="section">
-        <div class="block-title">등급별 수수료</div>
-        <p class="rate-note">수수료는 등급과 거래 규모에 따라 개별 안내드립니다. 자세한 내용은 상담을 통해 확인해 주세요.</p>
-        <a class="consult-btn" href="index.html#contact">상담하기</a>
+        <div class="block-title">등급 기준</div>
+        <div class="table-wrap">
+          <table class="grid">
+            <thead><tr><th class="svc">등급</th><th>연간 거래액</th></tr></thead>
+            <tbody>
+              <tr><td class="svc">브론즈 Bronze</td><td>1천만원 미만</td></tr>
+              <tr><td class="svc">실버 Silver</td><td>1천만원 이상 ~ 4천만원 미만</td></tr>
+              <tr><td class="svc">골드 Gold</td><td>4천만원 이상 ~ 1억원 미만</td></tr>
+              <tr><td class="svc">플래티넘 Platinum</td><td>1억원 이상</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </div>
@@ -161,4 +195,92 @@
           <dt>이메일</dt><dd><a href="mailto:emgt.yhlee@gmail.com">emgt.yhlee@gmail.com</a></dd>
         </dl>
       </div>
-      <div c
+      <div class="copy">© 2026 이머전트(Emergent)</div>
+    </div>
+  </footer>
+
+  <!-- 문의 팝업 -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div id="formArea">
+        <h3 id="modalTitle">문의하기</h3>
+        <p class="m-sub">담당자가 확인 후 빠르게 연락드립니다.</p>
+        <label for="f-name">성함 / 기관</label>
+        <input id="f-name" type="text" placeholder="예: 홍길동 / ○○대학교 △△연구실">
+        <label for="f-contact">연락처 (이메일 또는 전화)</label>
+        <input id="f-contact" type="text" placeholder="회신받으실 연락처">
+        <label for="f-msg">문의 내용</label>
+        <textarea id="f-msg" placeholder="필요하신 제품·수량·문의사항을 적어주세요."></textarea>
+        <div class="modal-actions">
+          <button class="btn-cancel" type="button" id="mClose">취소</button>
+          <button class="btn-send" type="button" id="mSend">문의 보내기</button>
+        </div>
+      </div>
+      <div id="successArea" style="display:none;text-align:center;padding:8px 0;">
+        <h3>접수되었습니다</h3>
+        <p class="m-sub" style="margin-bottom:0;">담당자가 확인 후 빠르게 연락드리겠습니다. 감사합니다.</p>
+        <div class="modal-actions"><button class="btn-send" type="button" id="mDone">확인</button></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  var modal = document.getElementById('modal');
+
+  function openModal(){ modal.classList.add('show'); }
+  function closeModal(){
+    modal.classList.remove('show');
+    document.getElementById('formArea').style.display = 'block';
+    document.getElementById('successArea').style.display = 'none';
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-contact').value = '';
+    document.getElementById('f-msg').value = '';
+  }
+
+  document.getElementById('consultBtn').addEventListener('click', function(e){ e.preventDefault(); openModal(); });
+  document.getElementById('navContact').addEventListener('click', function(e){ e.preventDefault(); openModal(); });
+  document.getElementById('mClose').addEventListener('click', closeModal);
+  document.getElementById('mDone').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+
+  /* 문의 보내기 (Formspree) */
+  document.getElementById('mSend').addEventListener('click', function(){
+    var name = document.getElementById('f-name').value.trim();
+    var contact = document.getElementById('f-contact').value.trim();
+    var msg = document.getElementById('f-msg').value.trim();
+    if(!contact){ alert('연락처를 입력해주세요.'); return; }
+    if(!msg){ alert('문의 내용을 입력해주세요.'); return; }
+
+    var btn = this;
+    btn.disabled = true; btn.textContent = '전송 중...';
+
+    fetch('https://formspree.io/f/mzdqwbpr', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        '서비스': '등급/수수료 상담',
+        '성함/기관': name || '-',
+        '연락처': contact,
+        '문의내용': msg,
+        '_subject': '[이머전트 문의] 등급/수수료 상담'
+      })
+    }).then(function(r){
+      if(r.ok){
+        document.getElementById('formArea').style.display = 'none';
+        document.getElementById('successArea').style.display = 'block';
+      } else {
+        r.json().then(function(d){
+          alert((d && d.errors && d.errors.map(function(e){return e.message;}).join(', ')) || '전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        }).catch(function(){ alert('전송에 실패했습니다. 잠시 후 다시 시도해주세요.'); });
+      }
+    }).catch(function(){
+      alert('전송에 실패했습니다. 네트워크 상태를 확인해주세요.');
+    }).finally(function(){
+      btn.disabled = false; btn.textContent = '문의 보내기';
+    });
+  });
+</script>
+
+</body>
+</html>

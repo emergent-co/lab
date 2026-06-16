@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RMX66434E8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RMX66434E8');
+</script>
 <title>이머전트 | 등급 제도</title>
 <meta name="description" content="이머전트(Emergent) 등급 제도 안내 - 연간 거래액에 따른 등급별 수수료와 결제 조건.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -59,8 +67,9 @@
   table.grid th,table.grid td{border:1px solid var(--line);padding:8px 10px;text-align:center;
     color:var(--ink-2);white-space:nowrap;}
   table.grid thead th{background:var(--paper);font-weight:700;color:var(--ink);}
-  table.grid td.svc,table.grid th.svc{text-align:left;color:var(--ink);font-weight:500;white-space:normal;}
-  table.grid td.use{text-align:left;white-space:normal;color:var(--ink-2);}
+  table.grid td.svc,table.grid th.svc{text-align:left;color:var(--ink);font-weight:500;white-space:nowrap;}
+  table.grid td.use{text-align:left;white-space:nowrap;color:var(--ink-2);}
+  .fee-sub{display:block;font-size:11px;color:var(--ink-3);font-weight:400;margin-top:2px;}
   .cap{font-size:12px;color:var(--ink-3);margin-top:8px;}
   .hl-note{margin-top:14px;line-height:2;}
   .hl-note span{font-size:14px;font-weight:700;color:var(--ink);
@@ -170,9 +179,9 @@
             <tbody>
               <tr><td class="svc">소모품 및 시약 구매</td><td class="use">머크, 포사이언스 등</td><td>수수료 없음</td></tr>
               <tr><td class="svc">국내 실험장비 할인구매</td><td class="use">삼흥에너지, 랩컴페니언 등</td><td>수수료 없음</td></tr>
-              <tr><td class="svc">해외 실험장비 수입</td><td class="use">고객 지정처</td><td>10% (관부가세·운송비 별도)</td></tr>
+              <tr><td class="svc">해외 실험장비 수입</td><td class="use">고객 지정처</td><td>10% (부가세 별도)<span class="fee-sub">수입 관세/부가세·운송비 별도</span></td></tr>
               <tr><td class="svc">소프트웨어 구매</td><td class="use">Ansys, 오리진 등</td><td>10% (부가세 별도)</td></tr>
-              <tr><td class="svc">연구실, 비품 구매</td><td class="use">네이버, 쿠팡, 나비엠알오, 알리익스프레스 등</td><td>10% (부가세 별도, 알리익스프레스 관부가세 별도)</td></tr>
+              <tr><td class="svc">연구실, 비품 구매</td><td class="use">네이버, 쿠팡, 나비엠알오, 알리익스프레스 등</td><td>10% (부가세 별도)<span class="fee-sub">알리익스프레스 관부가세 별도</span></td></tr>
               <tr><td class="svc">기타 행정 결제</td><td class="use">연구에 필요한 결제 일체</td><td>10% (부가세 별도)</td></tr>
             </tbody>
           </table>
@@ -248,6 +257,8 @@
   </div>
 
 <script>
+  function track(name, params){ if(window.gtag){ gtag('event', name, params || {}); } }
+
   /* 하위 탭 전환 */
   document.querySelectorAll('.subtab').forEach(function(t){
     t.addEventListener('click', function(){
@@ -256,12 +267,13 @@
       var id = t.getAttribute('data-tab');
       document.getElementById('tab-fee').style.display = (id === 'fee') ? 'block' : 'none';
       document.getElementById('tab-pay').style.display = (id === 'pay') ? 'block' : 'none';
+      track('switch_tab', { tab: id === 'fee' ? '수수료' : '결제주기·한도' });
     });
   });
 
   var modal = document.getElementById('modal');
 
-  function openModal(){ modal.classList.add('show'); }
+  function openModal(){ modal.classList.add('show'); track('open_inquiry', { source: 'grade' }); }
   function closeModal(){
     modal.classList.remove('show');
     document.getElementById('formArea').style.display = 'block';
@@ -305,6 +317,7 @@
       if(r.ok){
         document.getElementById('formArea').style.display = 'none';
         document.getElementById('successArea').style.display = 'block';
+        track('submit_inquiry', { service: '등급/수수료 상담' });
       } else {
         r.json().then(function(d){
           alert((d && d.errors && d.errors.map(function(e){return e.message;}).join(', ')) || '전송에 실패했습니다. 잠시 후 다시 시도해주세요.');

@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RMX66434E8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RMX66434E8');
+</script>
 <title>이머전트 | 연구실 구매 대행</title>
 <meta name="description" content="이머전트(Emergent) - 시약·과학기기 도소매 및 수리 전문. 연구실 구매와 행정 결제를 한 곳에서 대행합니다.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -301,6 +309,8 @@
   </div>
 
 <script>
+  function track(name, params){ if(window.gtag){ gtag('event', name, params || {}); } }
+
   /* 아코디언 펼치기 */
   document.querySelectorAll('.acc-item').forEach(function(item){
     var head = item.querySelector('.acc-head');
@@ -308,6 +318,7 @@
     head.addEventListener('click', function(){
       var open = item.classList.toggle('open');
       body.style.maxHeight = open ? body.scrollHeight + 'px' : null;
+      if(open){ track('expand_service', { service: head.textContent.trim() }); }
     });
   });
 
@@ -322,6 +333,7 @@
                                : '담당자가 확인 후 빠르게 연락드립니다.';
     document.getElementById('f-msg').value = svc ? ('[' + svc + '] 관련 문의드립니다.\n\n') : '';
     modal.classList.add('show');
+    track('open_inquiry', { source: svc ? 'service' : 'general' });
   }
   function closeModal(){
     modal.classList.remove('show');
@@ -371,6 +383,7 @@
       if(r.ok){
         document.getElementById('formArea').style.display = 'none';
         document.getElementById('successArea').style.display = 'block';
+        track('submit_inquiry', { service: currentSvc || '연구실 구매' });
       } else {
         r.json().then(function(d){
           alert((d && d.errors && d.errors.map(function(e){return e.message;}).join(', ')) || '전송에 실패했습니다. 잠시 후 다시 시도해주세요.');

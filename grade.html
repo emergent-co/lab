@@ -62,6 +62,10 @@
   table.grid td.svc,table.grid th.svc{text-align:left;color:var(--ink);font-weight:500;white-space:normal;}
   table.grid td.use{text-align:left;white-space:normal;color:var(--ink-2);}
   .cap{font-size:12px;color:var(--ink-3);margin-top:8px;}
+  .hl-note{margin-top:14px;line-height:2;}
+  .hl-note span{font-size:14px;font-weight:700;color:var(--ink);
+    background:linear-gradient(transparent 55%, #ffe27a 55%);padding:0 2px;
+    box-decoration-break:clone;-webkit-box-decoration-break:clone;}
   .rate-note{font-size:14px;color:var(--ink-2);margin-bottom:16px;}
   .consult-btn{display:inline-block;font-size:14px;font-weight:500;color:#fff;
     background:var(--accent);border:1px solid var(--accent);padding:11px 22px;border-radius:3px;
@@ -85,6 +89,13 @@
   .biz dt{color:var(--ink-3);}
   .biz dd{color:var(--ink-2);}
   .copy{margin-top:16px;font-size:11.5px;color:var(--ink-3);}
+  .foot-cta-wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    padding-bottom:22px;margin-bottom:22px;border-bottom:1px solid var(--line);}
+  .foot-cta-label{font-size:14px;color:var(--ink-2);font-weight:500;}
+  .foot-cta{display:inline-block;font-size:14px;font-weight:500;color:#fff;background:var(--accent);
+    border:1px solid var(--accent);padding:11px 22px;border-radius:3px;text-decoration:none;
+    transition:background .15s ease;}
+  .foot-cta:hover{background:#000;}
 
   /* modal */
   .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);
@@ -124,7 +135,6 @@
       <nav class="nav">
         <a href="index.html">서비스</a>
         <a href="grade.html" class="active">등급 제도</a>
-        <a href="#" class="nav-cta" id="navContact">문의하기</a>
       </nav>
     </div>
   </header>
@@ -162,12 +172,12 @@
               <tr><td class="svc">국내 실험장비 할인구매</td><td class="use">삼흥에너지, 랩컴페니언 등</td><td>수수료 없음</td></tr>
               <tr><td class="svc">해외 실험장비 수입</td><td class="use">고객 지정처</td><td>10% (관부가세·운송비 별도)</td></tr>
               <tr><td class="svc">소프트웨어 구매</td><td class="use">Ansys, 오리진 등</td><td>10% (부가세 별도)</td></tr>
-              <tr><td class="svc">연구실, 비품 구매</td><td class="use">네이버, 쿠팡, 나비엠알오, 알리익스프레스 등</td><td>10% (부가세 별도)</td></tr>
+              <tr><td class="svc">연구실, 비품 구매</td><td class="use">네이버, 쿠팡, 나비엠알오, 알리익스프레스(관부가세 별도) 등</td><td>10% (부가세 별도)</td></tr>
               <tr><td class="svc">기타 행정 결제</td><td class="use">연구에 필요한 결제 일체</td><td>10% (부가세 별도)</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="cap">상위 등급(실버·골드·플래티넘)은 우대 수수료가 적용됩니다. 자세한 내용은 상담을 통해 안내드립니다.</p>
+        <p class="hl-note"><span>상위 등급(실버·골드·플래티넘)은 우대 수수료가 적용됩니다. 자세한 내용은 상담을 통해 안내드립니다.</span></p>
         <div style="margin-top:16px;"><a class="consult-btn" href="#" id="consultBtn">상담하기</a></div>
       </div>
 
@@ -192,6 +202,10 @@
 
   <footer class="site-footer">
     <div class="container">
+      <div class="foot-cta-wrap">
+        <span class="foot-cta-label">구매·상담 문의를 남겨주세요.</span>
+        <a href="#" class="foot-cta" id="navContact">문의하기</a>
+      </div>
       <div class="biz">
         <div class="biz-title">사업자 정보</div>
         <dl>

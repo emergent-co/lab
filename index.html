@@ -111,6 +111,13 @@
   .biz dt{color:var(--ink-3);}
   .biz dd{color:var(--ink-2);}
   .copy{margin-top:16px;font-size:11.5px;color:var(--ink-3);}
+  .foot-cta-wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    padding-bottom:22px;margin-bottom:22px;border-bottom:1px solid var(--line);}
+  .foot-cta-label{font-size:14px;color:var(--ink-2);font-weight:500;}
+  .foot-cta{display:inline-block;font-size:14px;font-weight:500;color:#fff;background:var(--accent);
+    border:1px solid var(--accent);padding:11px 22px;border-radius:3px;text-decoration:none;
+    transition:background .15s ease;}
+  .foot-cta:hover{background:#000;}
 
   /* modal */
   .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);
@@ -150,7 +157,6 @@
       <nav class="nav">
         <a href="index.html" class="active">서비스</a>
         <a href="grade.html">등급 제도</a>
-        <a href="#" class="nav-cta" id="navContact">문의하기</a>
       </nav>
     </div>
   </header>
@@ -244,6 +250,10 @@
   <!-- 사업자 정보 (※ 사업자등록증 받으면 교체 예정) -->
   <footer class="site-footer">
     <div class="container">
+      <div class="foot-cta-wrap">
+        <span class="foot-cta-label">구매·상담 문의를 남겨주세요.</span>
+        <a href="#" class="foot-cta" id="navContact">문의하기</a>
+      </div>
       <div class="biz">
         <div class="biz-title">사업자 정보</div>
         <dl>

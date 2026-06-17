@@ -135,6 +135,23 @@
     .intro h1{font-size:20px;}
     main{padding:34px 0 44px;}
   }
+  /* 모바일: 표를 세로 카드형으로 */
+  @media (max-width:560px){
+    .table-wrap{overflow-x:visible;}
+    table.grid{min-width:0;border:none;}
+    table.grid thead{display:none;}
+    table.grid tbody,table.grid tr,table.grid td{display:block;width:100%;}
+    table.grid tr{border:1px solid var(--line);border-radius:5px;margin-bottom:10px;
+      overflow:hidden;background:#fff;}
+    table.grid td{border:none;border-top:1px solid var(--line-2);text-align:left;
+      white-space:normal;padding:9px 14px;font-size:13.5px;color:var(--ink);}
+    table.grid td::before{content:attr(data-label);display:block;font-size:11px;
+      font-weight:700;color:var(--ink-3);margin-bottom:3px;}
+    table.grid td.svc{border-top:none;background:var(--paper);
+      font-size:15px;font-weight:700;padding:11px 14px;}
+    table.grid td.svc::before{content:none;}
+    .fee-sub{margin-top:3px;}
+  }
 </style>
 </head>
 <body>
@@ -159,10 +176,10 @@
           <table class="grid">
             <thead><tr><th class="svc">등급</th><th>연간 거래액</th></tr></thead>
             <tbody>
-              <tr><td class="svc">브론즈 Bronze</td><td>1천만원 미만</td></tr>
-              <tr><td class="svc">실버 Silver</td><td>1천만원 이상 ~ 4천만원 미만</td></tr>
-              <tr><td class="svc">골드 Gold</td><td>4천만원 이상 ~ 1억원 미만</td></tr>
-              <tr><td class="svc">플래티넘 Platinum</td><td>1억원 이상</td></tr>
+              <tr><td class="svc">브론즈 Bronze</td><td data-label="연간 거래액">1천만원 미만</td></tr>
+              <tr><td class="svc">실버 Silver</td><td data-label="연간 거래액">1천만원 이상 ~ 4천만원 미만</td></tr>
+              <tr><td class="svc">골드 Gold</td><td data-label="연간 거래액">4천만원 이상 ~ 1억원 미만</td></tr>
+              <tr><td class="svc">플래티넘 Platinum</td><td data-label="연간 거래액">1억원 이상</td></tr>
             </tbody>
           </table>
         </div>
@@ -178,12 +195,12 @@
           <table class="grid">
             <thead><tr><th class="svc">서비스</th><th>사용처</th><th>수수료 (브론즈 기준)</th></tr></thead>
             <tbody>
-              <tr><td class="svc">소모품 및 시약 구매</td><td class="use">머크, 포사이언스 등</td><td>수수료 없음</td></tr>
-              <tr><td class="svc">국내 실험장비 할인구매</td><td class="use">삼흥에너지, 랩컴페니언 등</td><td>수수료 없음 + 할인구매</td></tr>
-              <tr><td class="svc">해외 실험장비 수입</td><td class="use">고객 지정처</td><td>10% (부가세 별도)<span class="fee-sub">수입 관세/부가세·운송비 별도</span></td></tr>
-              <tr><td class="svc">소프트웨어 구매</td><td class="use">Ansys, 오리진 등</td><td>10% (부가세 별도)</td></tr>
-              <tr><td class="svc">연구실, 비품 구매</td><td class="use">네이버, 쿠팡, 나비엠알오, 알리익스프레스 등</td><td>10% (부가세 별도)<span class="fee-sub">*관부가세&amp;운송료 발생 시 별도</span></td></tr>
-              <tr><td class="svc">기타 행정 결제</td><td class="use">연구에 필요한 결제 일체</td><td>10% (부가세 별도)</td></tr>
+              <tr><td class="svc">소모품 및 시약 구매</td><td class="use" data-label="사용처">머크, 포사이언스 등</td><td data-label="수수료">수수료 없음</td></tr>
+              <tr><td class="svc">국내 실험장비 할인구매</td><td class="use" data-label="사용처">삼흥에너지, 랩컴페니언 등</td><td data-label="수수료">수수료 없음 + 할인구매</td></tr>
+              <tr><td class="svc">해외 실험장비 수입</td><td class="use" data-label="사용처">고객 지정처</td><td data-label="수수료">10% (부가세 별도)<span class="fee-sub">수입 관세/부가세·운송비 별도</span></td></tr>
+              <tr><td class="svc">소프트웨어 구매</td><td class="use" data-label="사용처">Ansys, 오리진 등</td><td data-label="수수료">10% (부가세 별도)</td></tr>
+              <tr><td class="svc">연구실, 비품 구매</td><td class="use" data-label="사용처">네이버, 쿠팡, 나비엠알오, 알리익스프레스 등</td><td data-label="수수료">10% (부가세 별도)<span class="fee-sub">*관부가세&amp;운송료 발생 시 별도</span></td></tr>
+              <tr><td class="svc">기타 행정 결제</td><td class="use" data-label="사용처">연구에 필요한 결제 일체</td><td data-label="수수료">10% (부가세 별도)</td></tr>
             </tbody>
           </table>
         </div>
@@ -196,10 +213,10 @@
           <table class="grid">
             <thead><tr><th class="svc">등급</th><th>결제 주기</th><th>분기별 결제한도</th></tr></thead>
             <tbody>
-              <tr><td class="svc">브론즈</td><td>1/4분기마다 결제</td><td>300만원</td></tr>
-              <tr><td class="svc">실버</td><td>1/4분기마다 결제</td><td>1,000만원</td></tr>
-              <tr><td class="svc">골드</td><td>1/4분기마다 결제</td><td>5,000만원</td></tr>
-              <tr><td class="svc">플래티넘</td><td>1/2분기마다 결제</td><td>한도 없음 (협의)</td></tr>
+              <tr><td class="svc">브론즈</td><td data-label="결제 주기">1/4분기마다 결제</td><td data-label="분기별 결제한도">300만원</td></tr>
+              <tr><td class="svc">실버</td><td data-label="결제 주기">1/4분기마다 결제</td><td data-label="분기별 결제한도">1,000만원</td></tr>
+              <tr><td class="svc">골드</td><td data-label="결제 주기">1/4분기마다 결제</td><td data-label="분기별 결제한도">5,000만원</td></tr>
+              <tr><td class="svc">플래티넘</td><td data-label="결제 주기">1/2분기마다 결제</td><td data-label="분기별 결제한도">한도 없음 (협의)</td></tr>
             </tbody>
           </table>
         </div>
